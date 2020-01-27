@@ -8,6 +8,7 @@ bot = commands.Bot(command_prefix='!')
 bot_extensions = [
     'cogs.admin',
     'cogs.greetings',
+    'cogs.promote',
 ]
 
 @bot.listen()
