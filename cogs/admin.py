@@ -21,5 +21,10 @@ class Admin(commands.Cog):
         else:
             await member.send('\N{OK HAND SIGN}')
 
+    @reload.error
+    async def reload_error(self, ctx, error):
+        member = await ctx.author.create_dm()
+        await member.send('I don\'t think you want to be trying that.')
+
 def setup(bot):
     bot.add_cog(Admin(bot))
