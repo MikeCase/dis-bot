@@ -13,9 +13,9 @@ async def load_cogs(ctx):
         print(f'Loading extension {cog}')
         bot.load_extension(cog)
 
-@commands.Cog.listener()
+@bot.event
 async def on_ready():
-    load_cogs(bot_extensions)
+    await load_cogs(bot_extensions)
     print(f'Loaded and ready.')
 
 bot.run(f'{BOT_TOKEN}')
