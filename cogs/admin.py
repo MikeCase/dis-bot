@@ -7,19 +7,19 @@ class Admin(commands.Cog):
         self._last_result = None
         self.sessions = set()
 
-    @commands.command(name='reload')
+    @commands.command(name='reload',pass_context=True)
     @commands.is_owner()
     async def reload(self, ctx, *, module):
         """ Reload module """
+        member = await ctx.author.create_dm()
+        # When a non owner trys to use this command it raises NotOwner 
+        # What I want to do is push that error to the user to let them know.
         try:
             self.bot.reload_extension(module)
         except commands.ExtensionError as e:
-            await ctx.send(f'{e.__class__.__name__}: {e}')
-        except commands.CheckFailure as e: 
-            userMsg = await ctx.author.create_dm()
-            await userMsg.send(f'{e}')
+            await member.send(f'{e.__class__.__name__}: {e}')
         else:
-            await ctx.send('\N{OK HAND SIGN}')
+            await member.send('\N{OK HAND SIGN}')
 
 def setup(bot):
     bot.add_cog(Admin(bot))
