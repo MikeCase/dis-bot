@@ -8,6 +8,7 @@ bot_extensions = [
     'cogs.admin',
     'cogs.greetings',
     'cogs.promote',
+    'cogs.shop',
 ]
 
 async def load_cogs(ctx):
