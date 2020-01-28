@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 
-
 class Shopper(commands.Cog):
 
     """ Online price search with the bot. 
