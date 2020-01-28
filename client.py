@@ -1,7 +1,6 @@
 import os, traceback, sys
 import discord
 from discord.ext import commands
-from discord.ext.commands import Cog
 from config import BOT_TOKEN
 
 bot = commands.Bot(command_prefix='!')
