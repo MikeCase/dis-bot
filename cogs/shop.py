@@ -1,8 +1,11 @@
 import re
+import random
 import discord
 from discord.ext import commands
 import requests
 from bs4 import BeautifulSoup
+from ebaysdk.finding import Connection as Finding
+import pprint
 
 class Shopper(commands.Cog):
 
@@ -11,6 +14,7 @@ class Shopper(commands.Cog):
 
     def __init__(self,bot):
         self.bot = bot
+        self.app = 'MichaelC-DiscordB-PRD-bcbc14c9f-076e7c02'
 
     @commands.command()
     async def amzn(self, ctx, *, search):
@@ -35,8 +39,40 @@ class Shopper(commands.Cog):
 
     @commands.command()
     async def ebay(self, ctx, *, search):
-        """ Search Ebay """
-        pass
+        api = Finding(appid=self.app, config_file=None)
+        count = 3
+        data = {
+            'keywords': search,
+            'paginationInput': {
+                'entriesPerPage': f'{count}',
+                'pageNumber': '1',
+                }
+            }
+        resp = api.execute('findItemsAdvanced', data=data)
+    
+        # pprint.pprint(resp.dict())
+        # results = resp
+        # print(dir(resp.reply))
+        if resp.reply.ack == 'Success':
+            # member = await ctx.channel
+            item_url = resp.reply.itemSearchURL
+            items = resp.reply.searchResult.item
+            embed = discord.Embed(title="Search results", url=item_url, color=discord.Colour.dark_teal())
+            embed.add_field(name='Requested By', value=ctx.author.name)
+            for i in items:
+                # print(dir(i))
+                embed.set_thumbnail(url=i.galleryURL)
+                # embed.add_field(name='image', value=i.galleryURL, inline=False)
+                embed.add_field(name='Title', value=f'[{i.title}]({i.viewItemURL})', inline=False)
+                embed.add_field(name='Price', value=i.sellingStatus.currentPrice.value, inline=False)
+
+            if command.is_owner():
+            embed.set_footer(text='Your results Sire.')
+
+                
+            await ctx.send(embed=embed)
+
+
 
     @commands.command()
     async def nweg(self, ctx, *, search):

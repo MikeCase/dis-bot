@@ -5,3 +5,10 @@ Pipfile.lock
 .git/*
 kite-installer
 bot_db.db
+cogs/__pycache__/admin.cpython-38.pyc
+cogs/__pycache__/greetings.cpython-38.pyc
+cogs/__pycache__/promote.cpython-38.pyc
+cogs/__pycache__/shop.cpython-38.pyc
+utils/__pycache__/__init__.cpython-38.pyc
+__pycache__/config.cpython-38.pyc
+utils/__pycache__/db.cpython-38.pyc
