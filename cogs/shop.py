@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from ebaysdk.finding import Connection as Finding
 import pprint
+from config import EBAY_KEY
 
 class Shopper(commands.Cog):
 
@@ -14,7 +15,8 @@ class Shopper(commands.Cog):
 
     def __init__(self,bot):
         self.bot = bot
-        self.app = 'MichaelC-DiscordB-PRD-bcbc14c9f-076e7c02'
+        self.app = EBAY_KEY
+        self.words = ['Ya Bum', 'Snowflake', 'Boomer', 'Bitch']
 
     @commands.command()
     async def amzn(self, ctx, *, search):
@@ -58,18 +60,25 @@ class Shopper(commands.Cog):
             item_url = resp.reply.itemSearchURL
             items = resp.reply.searchResult.item
             embed = discord.Embed(title="Search results", url=item_url, color=discord.Colour.dark_teal())
-            embed.add_field(name='Requested By', value=ctx.author.name)
+            embed.add_field(name='Requested By', value=ctx.author.mention)
+            img = []
             for i in items:
                 # print(dir(i))
-                embed.set_thumbnail(url=i.galleryURL)
+                img.append(i.galleryURL)
+                # embed.set_thumbnail(url=i.galleryURL)
                 # embed.add_field(name='image', value=i.galleryURL, inline=False)
                 embed.add_field(name='Title', value=f'[{i.title}]({i.viewItemURL})', inline=False)
                 embed.add_field(name='Price', value=i.sellingStatus.currentPrice.value, inline=False)
+            thumb_nail = random.choice(img)
+            # print(thumb_nail)
+            embed.set_thumbnail(url=thumb_nail)
+            print(ctx.author.id)
+            if ctx.author.id == 491248872119861250:
+                embed.set_footer(text='Your results Sire.')
+            else:
+                embed.set_footer(text=f"Your results {random.choice(self.words)}.")
 
-            if command.is_owner():
-            embed.set_footer(text='Your results Sire.')
 
-                
             await ctx.send(embed=embed)
 
 
