@@ -78,7 +78,6 @@ class Shopper(commands.Cog):
             else:
                 embed.set_footer(text=f"Your results {random.choice(self.words)}.")
 
-
             await ctx.send(embed=embed)
 
 
