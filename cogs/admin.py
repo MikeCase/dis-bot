@@ -3,13 +3,22 @@ from discord.ext import commands
 from datetime import datetime
 from utils.db import Session, User, Promote
 from sqlalchemy import and_
-
+from config import BOT_OWNER
 
 class Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.owner = BOT_OWNER
         self._last_result = None
         self.sessions = set()
+
+
+    @commands.command()
+    @commands.is_owner()
+    async def kick(self, ctx, username, *args):
+        
+        pass
+
 
     @commands.command()
     @commands.is_owner()
